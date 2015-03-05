@@ -1,12 +1,45 @@
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Generated files
+gen/
+bin/
+build/
+target/
+classes/
+*.log
+local.properties
 *.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.ear
+*.apk
+*.ap_
+*.dex
+.gradle/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# Backup files
+*~
+*.bak
+*.orig
+*.swp
+
+# Android Studio and Intellij IDEA config files
+.idea
+*.iml
+
+# Eclipse config files
+.settings
+.classpath
+.project
+.metadata
+
+# Netbeans config files
+nb-configuration.xml
+nbactions.xml
+.nb-gradle
+nbproject/
+
+# Mac files
+.DS_Store
+

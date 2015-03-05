@@ -1,0 +1,9 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'to.noc.sslping.SSLPing'
+    }
+}
