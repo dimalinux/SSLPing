@@ -43,3 +43,4 @@ nbproject/
 # Mac files
 .DS_Store
 
+!dist/*.jar
