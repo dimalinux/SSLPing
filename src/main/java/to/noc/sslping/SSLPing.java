@@ -14,7 +14,7 @@ public class SSLPing {
 
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.println("Usage: " + SSLPing.class.getName() + " <host> <port>");
+            System.out.println("Usage: java -jar SSLPing.jar <host> <port>");
             System.exit(1);
         }
         try {
@@ -25,7 +25,8 @@ public class SSLPing {
             System.out.println("About to connect to '" + hostname + "' on port " + port);
 
             SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-            SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(args[0], Integer.parseInt(args[1]));
+            SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(hostname, port);
+            sslsocket.setTcpNoDelay(true); // we only send 1 byte, don't buffer
 
             InputStream in = sslsocket.getInputStream();
             OutputStream out = sslsocket.getOutputStream();
@@ -38,8 +39,8 @@ public class SSLPing {
             }
             System.out.println("Successfully connected");
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
