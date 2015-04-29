@@ -44,3 +44,4 @@ nbproject/
 .DS_Store
 
 !dist/*.jar
+!gradle/wrapper/*
