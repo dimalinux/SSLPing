@@ -1,8 +1,8 @@
 package to.noc.sslping;
 
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 
@@ -26,17 +26,21 @@ public class SSLPing {
 
             SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
             SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(hostname, port);
-            sslsocket.setTcpNoDelay(true); // we only send 1 byte, don't buffer
 
-            InputStream in = sslsocket.getInputStream();
+            // Hostname verification is not done by default in Java with raw SSL connections.
+            // The next 3 lines enable it.
+            SSLParameters sslParams = new SSLParameters();
+            sslParams.setEndpointIdentificationAlgorithm("HTTPS");
+            sslsocket.setSSLParameters(sslParams);
+
+            // we only send 1 byte, so don't buffer
+            sslsocket.setTcpNoDelay(true);
+
+            // Write a test byte to trigger the SSL handshake
             OutputStream out = sslsocket.getOutputStream();
-
-            // Write a test byte to get a reaction :)
             out.write(1);
 
-            while (in.available() > 0) {
-                System.out.print(in.read());
-            }
+            // If no exception happened, we connected successfully
             System.out.println("Successfully connected");
 
         } catch (Exception e) {
