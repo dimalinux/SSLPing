@@ -1,6 +1,5 @@
 package to.noc.sslping;
 
-import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -24,14 +23,7 @@ public class SSLPing {
         SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         try (SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(hostname, port)) {
-            // Hostname verification is not done by default in Java with raw SSL connections.
-            // The next 3 lines enable it.
-            SSLParameters sslParams = new SSLParameters();
-            sslParams.setEndpointIdentificationAlgorithm("HTTPS");
-            sslsocket.setSSLParameters(sslParams);
-
             sslsocket.startHandshake();
-
             System.out.println("Successfully connected");
         } catch (Exception e) {
             e.printStackTrace();
