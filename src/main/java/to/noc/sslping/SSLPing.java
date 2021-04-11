@@ -15,16 +15,15 @@ public class SSLPing {
             System.out.println("Usage: java -jar SSLPing.jar <host> <port>");
             System.exit(1);
         }
-        try {
 
-            String hostname = args[0];
-            int port = Integer.parseInt(args[1]);
+        String hostname = args[0];
+        int port = Integer.parseInt(args[1]);
 
-            System.out.println("About to connect to '" + hostname + "' on port " + port);
+        System.out.println("About to connect to '" + hostname + "' on port " + port);
 
-            SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-            SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(hostname, port);
+        SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
+        try (SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket(hostname, port)) {
             // Hostname verification is not done by default in Java with raw SSL connections.
             // The next 3 lines enable it.
             SSLParameters sslParams = new SSLParameters();
@@ -34,7 +33,6 @@ public class SSLPing {
             sslsocket.startHandshake();
 
             System.out.println("Successfully connected");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
