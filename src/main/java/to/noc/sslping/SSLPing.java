@@ -3,8 +3,6 @@ package to.noc.sslping;
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.OutputStream;
-
 
 /*
  *  Simple tool to test an SSL handshake to a remote server that does not assume that
@@ -33,14 +31,8 @@ public class SSLPing {
             sslParams.setEndpointIdentificationAlgorithm("HTTPS");
             sslsocket.setSSLParameters(sslParams);
 
-            // we only send 1 byte, so don't buffer
-            sslsocket.setTcpNoDelay(true);
+            sslsocket.startHandshake();
 
-            // Write a test byte to trigger the SSL handshake
-            OutputStream out = sslsocket.getOutputStream();
-            out.write(1);
-
-            // If no exception happened, we connected successfully
             System.out.println("Successfully connected");
 
         } catch (Exception e) {
